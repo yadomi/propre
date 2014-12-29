@@ -1,0 +1,124 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'fileutils'
+require 'highline/import'
+require 'parseconfig'
+require 'themoviedb'
+
+module Prompt
+
+  def Prompt.yesno(prompt = 'Continue?', default = false)
+    a = ''
+    s = default ? '[Y/n]' : '[y/N]'
+    d = default ? 'y' : 'n'
+    until %w[y n].include? a
+      a = ask("#{prompt} #{s} ") { |q| q.limit = 1; q.case = :downcase }
+      a = d if a.length == 0
+    end
+    a == 'y'
+  end
+
+end
+
+
+class Settings
+
+  def initialize(path)
+    @path = path
+    if !File.exist?(path) then FileUtils.touch(path) end
+    conf = YAML.load_file(path)
+    @settings = conf ? conf : Hash.new
+  end
+
+  def get(key)
+    @settings[key]
+  end
+
+  def set(key, value)
+    @settings[key] = value
+    File.open(@path, 'w') { |f| YAML.dump(@settings, f) }
+  end
+
+end
+
+
+class Propre
+  include Prompt
+
+  def initialize
+    @settings = Settings.new("#{Dir.home}/.config/Propre/settings.yaml")
+    if @settings.get('apikey').nil?
+      puts "It's seem you did not set your TMDB API Key, please tell me:"
+      @settings.set('apikey', STDIN.gets.chomp())
+    end
+    Tmdb::Api.key(@settings.get('apikey'))
+    Tmdb::Api.language(@settings.get('locale') ? @settings.get('locale') : 'en')
+  end
+
+  def crawlDirectory(path, recursive)
+    Dir.foreach(path) do |item|
+      next if item == '.' or item == '..'
+      if File.directory?(File.join(path, item))
+        self.crawlDirectory(File.join(path, item), recursive) 
+      else
+        self.searchMovieFromFile(File.join(path, item))
+      end
+    end
+  end
+
+  def searchMovieFromFile(file)
+    @file = file
+    filename = File.basename(file,File.extname(file))
+    @movies = Tmdb::Movie.find(filename)
+    if self.confirm
+      File.rename(file, File.join(File.dirname(file), self.format(@selected)))
+    end
+  end
+
+  def confirm()
+    @selected = false
+    @movies.each do |movie|
+      if !Prompt.yesno("#{File.basename(@file)} -> #{self.format(movie)}") then next end
+      @selected = movie
+      break
+    end
+    if @selected then @selected end
+  end
+
+  def format(movie)
+    year = !movie.release_date.empty? ? Date.strptime(movie.release_date, "%Y-%m-%d").year : false
+    title = year ? "#{movie.title} (#{year})" : "#{movie.title}"
+    title.gsub! ':','-'
+    return "#{title}#{File.extname(@file)}"
+  end
+
+end
+
+options = {}
+OptionParser.new do |opt|
+  opt.banner = "Usage: #{ File.basename($0) } [OPTION]... SOURCE..."
+
+  opt.on('-R', '--recursive', 'Run recursively') do |v|
+    options[:recursive] = v
+  end
+
+  opt.on('-i', '--interactive', 'Run interactively') do |v|
+    options[':interactive'] = v
+  end
+  options[:help] = opt.help
+end.parse!
+
+
+if ARGV.size < 1
+  puts options[:help]
+else
+  propre = Propre.new
+  if File.directory?(ARGV[0])
+    propre.crawlDirectory(ARGV[0], options[:recursive])
+  end
+
+  if File.file?(ARGV[0])
+    propre.searchMovieFromFile(ARGV[0])
+  end
+end
