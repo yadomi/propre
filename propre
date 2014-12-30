@@ -64,13 +64,13 @@ class Propre
       if File.directory?(File.join(path, item))
         if @options[:recursive] then self.crawlDirectory(File.join(path, item)) end
       else
-        @file = item
         self.searchMovieFromFile(File.join(path, item))
       end
     end
   end
 
   def searchMovieFromFile(file)
+    @file = file
     filename = File.basename(file,File.extname(file))
     if @options[:videonly] && !video?(file)
       return
@@ -78,6 +78,7 @@ class Propre
     if !@options[:dotfile] && filename.start_with?('.')
       return
     end
+    if @options[:sanitize] then filename = self.sanitize(filename) end
     @movies = Tmdb::Movie.find(filename)
     if self.confirm
       File.rename(file, File.join(File.dirname(file), self.format(@selected)))
@@ -100,6 +101,13 @@ class Propre
     title = year ? "#{movie.title} (#{year})" : "#{movie.title}"
     title.gsub! ':','-'
     return "#{title}#{File.extname(@file)}"
+  end
+
+  def sanitize(filename)
+    filename.downcase!
+    filename.gsub!(/\(.*\)/, '').gsub!("_", ' ').gsub!(".", ' ').strip!
+    warez = ["truefrench","fansub","bluray","720", "720p", "x264","french", "fr", "divx","hdcam","xvid","appz","bdrip","board","cam","dvd","dvd-r","dvdrip","dupecheck","fake","fs","gamez","hddvd","hddvdrip","hdrip","hdtv","pdtv","internal","int","keygen","leecher","limited","nuke","proper","repack","retail","rip","rip","screener","serial","subforced","hardsub","stv","telecine","telesync","tvrip","unrated","vhsrip","vo","vost","vostfr","workprint","french","wp","subbed","unsubbed", "r5", "r6", "md"]  
+    (filename.split - warez).join(' ')
   end
 
   def video?(file)
