@@ -13,6 +13,9 @@ Usage
 Usage: propre [OPTION]... SOURCE...
     -R, --recursive                  Run recursively
     -i, --interactive                Run interactively
+    -V, --video-only                 Search for video files only
+    -s, --sanitize                   Sanitize filename before search
+    -d, --dotfile                    Don't ignore .dotfile
 ```
 
 Changelog
