@@ -120,7 +120,7 @@ OptionParser.new do |opt|
     options[:interactive] = v
   end
 
-  opt.on('-V', '--video-only', 'Try to find only video files') do |v|
+  opt.on('-V', '--video-only', 'Search for video files only') do |v|
     options[:videonly] = v
   end
 
