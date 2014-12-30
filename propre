@@ -60,20 +60,24 @@ class Propre
   def crawlDirectory(path)
     Dir.foreach(path) do |item|
       next if item == '.' or item == '..'
+      # next if !@options[:dotfile] && !item.start_with?('.')
       if File.directory?(File.join(path, item))
         if @options[:recursive] then self.crawlDirectory(File.join(path, item)) end
       else
+        @file = item
         self.searchMovieFromFile(File.join(path, item))
       end
     end
   end
 
   def searchMovieFromFile(file)
+    filename = File.basename(file,File.extname(file))
     if @options[:videonly] && !video?(file)
       return
     end
-    @file = file
-    filename = File.basename(file,File.extname(file))
+    if !@options[:dotfile] && filename.start_with?('.')
+      return
+    end
     @movies = Tmdb::Movie.find(filename)
     if self.confirm
       File.rename(file, File.join(File.dirname(file), self.format(@selected)))
