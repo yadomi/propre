@@ -18,6 +18,11 @@ Usage: propre [OPTION]... SOURCE...
 Changelog
 ---------
 
+### 0.0.2 Initial
+  
+  - Catch CTRL+C Interrupt
+  - Recursive parameters now work
+
 ### 0.0.1 Initial
 
   - Can rename from file or folders
