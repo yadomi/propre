@@ -18,7 +18,12 @@ Usage: propre [OPTION]... SOURCE...
 Changelog
 ---------
 
-### 0.0.2 Initial
+### 0.0.3
+
+  - Add params to iterate trought video only (Using MimeType)  
+  - Fix recursive params
+
+### 0.0.2
   
   - Catch CTRL+C Interrupt
   - Recursive parameters now work
