@@ -18,21 +18,17 @@ Usage: propre [OPTION]... SOURCE...
 Changelog
 ---------
 
+### 0.0.4
+
+  - Add params to consider .dotfile
+  - Add params to sanitize file before search
+  - Bugfix
+
 ### 0.0.3
 
   - Add params to iterate trought video only (Using MimeType)  
-  - Add option to skip current file
+  - Add params to skip current file
   - Fix recursive params
-
-### 0.0.2
-  
-  - Catch CTRL+C Interrupt
-  - Recursive parameters now work
-
-### 0.0.1 Initial
-
-  - Can rename from file or folders
-  - Can iterate recursively
 
 Disclaimer
 ----------
