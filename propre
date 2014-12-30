@@ -11,17 +11,16 @@ module Prompt
 
   def Prompt.yesno(prompt = 'Continue?', default = false)
     a = ''
-    s = default ? '[Y/n]' : '[y/N]'
+    s = default ? '[Y/n/s]' : '[y/N/s]'
     d = default ? 'y' : 'n'
-    until %w[y n].include? a
+    until %w[y n s].include? a
       a = ask("#{prompt} #{s} ") { |q| q.limit = 1; q.case = :downcase }
       a = d if a.length == 0
     end
-    a == 'y'
+    if a == 'y'; true elsif a == 's'; 'skip' else false end
   end
 
 end
-
 
 class Settings
 
@@ -84,7 +83,8 @@ class Propre
   def confirm()
     @selected = false
     @movies.each do |movie|
-      if !Prompt.yesno("#{File.basename(@file)} -> #{self.format(movie)}") then next end
+      answer = Prompt.yesno("#{File.basename(@file)} -> #{self.format(movie)}")
+      if answer === false; next ; elsif answer === 'skip'; puts "Skipping..."; return end
       @selected = movie
       break
     end
