@@ -125,7 +125,7 @@ OptionParser.new do |opt|
   end
 
   opt.on('-s', '--sanitize', 'Sanitize filename before search') do |v|
-    options[:videonly] = v
+    options[:sanitize] = v
   end
 
   opt.on('-d', '--dotfile', 'Don\'t ignore .dotfile') do |v|
