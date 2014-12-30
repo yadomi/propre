@@ -60,8 +60,8 @@ class Propre
   def crawlDirectory(path)
     Dir.foreach(path) do |item|
       next if item == '.' or item == '..'
-      if File.directory?(File.join(path, item)) && @options[:recursive]
-        self.crawlDirectory(File.join(path, item)) 
+      if File.directory?(File.join(path, item))
+        if @options[:recursive] then self.crawlDirectory(File.join(path, item)) end
       else
         self.searchMovieFromFile(File.join(path, item))
       end
