@@ -5,6 +5,7 @@ require 'fileutils'
 require 'highline/import'
 require 'parseconfig'
 require 'themoviedb'
+require 'mime/types'
 
 module Prompt
 
@@ -46,7 +47,8 @@ end
 class Propre
   include Prompt
 
-  def initialize
+  def initialize(options)
+    @options = options
     @settings = Settings.new("#{Dir.home}/.config/Propre/settings.yaml")
     if @settings.get('apikey').nil?
       puts "It's seem you did not set your TMDB API Key, please tell me:"
@@ -56,11 +58,11 @@ class Propre
     Tmdb::Api.language(@settings.get('locale') ? @settings.get('locale') : 'en')
   end
 
-  def crawlDirectory(path, recursive)
+  def crawlDirectory(path)
     Dir.foreach(path) do |item|
       next if item == '.' or item == '..'
-      if File.directory?(File.join(path, item)) && recursive
-        self.crawlDirectory(File.join(path, item), recursive) 
+      if File.directory?(File.join(path, item)) && @options[:recursive]
+        self.crawlDirectory(File.join(path, item)) 
       else
         self.searchMovieFromFile(File.join(path, item))
       end
@@ -68,6 +70,9 @@ class Propre
   end
 
   def searchMovieFromFile(file)
+    if @options[:videonly] && !video?(file)
+      return
+    end
     @file = file
     filename = File.basename(file,File.extname(file))
     @movies = Tmdb::Movie.find(filename)
@@ -93,6 +98,10 @@ class Propre
     return "#{title}#{File.extname(@file)}"
   end
 
+  def video?(file)
+    MIME::Types[/^video/].include? MIME::Types.of(file)
+  end
+
 end
 
 options = {}
@@ -104,8 +113,13 @@ OptionParser.new do |opt|
   end
 
   opt.on('-i', '--interactive', 'Run interactively') do |v|
-    options[':interactive'] = v
+    options[:interactive] = v
   end
+
+  opt.on('-V', '--video-only', 'Try to find only video files') do |v|
+    options[:videonly] = v
+  end
+
   options[:help] = opt.help
 end.parse!
 
@@ -113,9 +127,9 @@ def main(options)
   if ARGV.size < 1
     puts options[:help]
   else
-    propre = Propre.new
+    propre = Propre.new(options)
     if File.directory?(ARGV[0])
-      propre.crawlDirectory(ARGV[0], options[:recursive])
+      propre.crawlDirectory(ARGV[0])
     end
 
     if File.file?(ARGV[0])
