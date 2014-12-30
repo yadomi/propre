@@ -109,16 +109,25 @@ OptionParser.new do |opt|
   options[:help] = opt.help
 end.parse!
 
+def main(options)
+  if ARGV.size < 1
+    puts options[:help]
+  else
+    propre = Propre.new
+    if File.directory?(ARGV[0])
+      propre.crawlDirectory(ARGV[0], options[:recursive])
+    end
 
-if ARGV.size < 1
-  puts options[:help]
-else
-  propre = Propre.new
-  if File.directory?(ARGV[0])
-    propre.crawlDirectory(ARGV[0], options[:recursive])
+    if File.file?(ARGV[0])
+      propre.searchMovieFromFile(ARGV[0])
+    end
   end
+end
 
-  if File.file?(ARGV[0])
-    propre.searchMovieFromFile(ARGV[0])
-  end
+begin
+  main(options)
+rescue Interrupt
+  puts "\nExiting..."  
+rescue StandardError => e
+  puts e
 end
