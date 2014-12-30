@@ -21,6 +21,7 @@ Changelog
 ### 0.0.3
 
   - Add params to iterate trought video only (Using MimeType)  
+  - Add option to skip current file
   - Fix recursive params
 
 ### 0.0.2
