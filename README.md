@@ -22,6 +22,10 @@ Propre
 
 ##Changelog
 
+### 0.0.6
+
+  - Fix: Resolving dependencies issues
+
 ### 0.0.5
 
   - Update directory structure to work with RubyGems
