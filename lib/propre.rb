@@ -43,7 +43,13 @@ class Propre
       return
     end
     if @options[:sanitize] then filename = self.sanitize(filename) end
-    @movies = Tmdb::Movie.find(filename)
+    begin
+      @movies = Tmdb::Movie.find(filename)
+    rescue
+      if Tmdb::Api.response['code'] === 401
+        abort("Error: Did you set you're API Key ? (401)")
+      end
+    end
     if self.confirm
       File.rename(file, File.join(File.dirname(file), self.format(@selected)))
     end
