@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
+
+require 'optparse'
+require 'propre'
+
+options = {}
+OptionParser.new do |opt|
+  opt.banner = "Usage: #{ File.basename($0) } [OPTION]... SOURCE..."
+
+  opt.on('-R', '--recursive', 'Run recursively') do |v|
+    options[:recursive] = v
+  end
+
+  opt.on('-i', '--interactive', 'Run interactively') do |v|
+    options[:interactive] = v
+  end
+
+  opt.on('-V', '--video-only', 'Search for video files only') do |v|
+    options[:videonly] = v
+  end
+
+  opt.on('-s', '--sanitize', 'Sanitize filename before search') do |v|
+    options[:sanitize] = v
+  end
+
+  opt.on('-d', '--dotfile', 'Don\'t ignore .dotfile') do |v|
+    options[:dotfile] = v
+  end
+
+  options[:help] = opt.help
+end.parse!
+
+def main(options)
+  if ARGV.size < 1
+    puts options[:help]
+  else
+    propre = Propre.new(options)
+    if File.directory?(ARGV[0])
+      propre.crawlDirectory(ARGV[0])
+    end
+
+    if File.file?(ARGV[0])
+      propre.searchMovieFromFile(ARGV[0])
+    end
+  end
+end
+
+begin
+  main(options)
+rescue Interrupt
+  puts "\nExiting..."  
+rescue StandardError => e
+  puts e
+end
