@@ -1,25 +1,26 @@
+[![Gem Version](https://badge.fury.io/rb/propre.svg)](http://badge.fury.io/rb/propre)
+
 Propre
 ======
 
-Introduction
-------------
+##Introduction
 
 Propre is a handy tool written in Ruby to bulk rename your movies using TheMovieDB API.
 
-Usage
------
+##Installation
 
-```
-Usage: propre [OPTION]... SOURCE...
-    -R, --recursive                  Run recursively
-    -i, --interactive                Run interactively
-    -V, --video-only                 Search for video files only
-    -s, --sanitize                   Sanitize filename before search
-    -d, --dotfile                    Don't ignore .dotfile
-```
+  gem install propre
 
-Changelog
----------
+##Usage
+
+  Usage: propre [OPTION]... SOURCE...
+      -R, --recursive                  Run recursively
+      -i, --interactive                Run interactively
+      -V, --video-only                 Search for video files only
+      -s, --sanitize                   Sanitize filename before search
+      -d, --dotfile                    Don't ignore .dotfile
+
+##Changelog
 
 ### 0.0.5
 
