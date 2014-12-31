@@ -1,47 +1,9 @@
-#!/usr/bin/env ruby
+require 'propre/prompt'
+require 'propre/settings'
 
-require 'optparse'
 require 'fileutils'
-require 'highline/import'
-require 'parseconfig'
 require 'themoviedb'
 require 'mime/types'
-
-module Prompt
-
-  def Prompt.yesno(prompt = 'Continue?', default = false)
-    a = ''
-    s = default ? '[Y/n/s]' : '[y/N/s]'
-    d = default ? 'y' : 'n'
-    until %w[y n s].include? a
-      a = ask("#{prompt} #{s} ") { |q| q.limit = 1; q.case = :downcase }
-      a = d if a.length == 0
-    end
-    if a == 'y'; true elsif a == 's'; 'skip' else false end
-  end
-
-end
-
-class Settings
-
-  def initialize(path)
-    @path = path
-    if !File.exist?(path) then FileUtils.touch(path) end
-    conf = YAML.load_file(path)
-    @settings = conf ? conf : Hash.new
-  end
-
-  def get(key)
-    @settings[key]
-  end
-
-  def set(key, value)
-    @settings[key] = value
-    File.open(@path, 'w') { |f| YAML.dump(@settings, f) }
-  end
-
-end
-
 
 class Propre
   include Prompt
@@ -60,7 +22,6 @@ class Propre
   def crawlDirectory(path)
     Dir.foreach(path) do |item|
       next if item == '.' or item == '..'
-      # next if !@options[:dotfile] && !item.start_with?('.')
       if File.directory?(File.join(path, item))
         if @options[:recursive] then self.crawlDirectory(File.join(path, item)) end
       else
@@ -114,54 +75,4 @@ class Propre
     MIME::Types[/^video/].include? MIME::Types.of(file)
   end
 
-end
-
-options = {}
-OptionParser.new do |opt|
-  opt.banner = "Usage: #{ File.basename($0) } [OPTION]... SOURCE..."
-
-  opt.on('-R', '--recursive', 'Run recursively') do |v|
-    options[:recursive] = v
-  end
-
-  opt.on('-i', '--interactive', 'Run interactively') do |v|
-    options[:interactive] = v
-  end
-
-  opt.on('-V', '--video-only', 'Search for video files only') do |v|
-    options[:videonly] = v
-  end
-
-  opt.on('-s', '--sanitize', 'Sanitize filename before search') do |v|
-    options[:sanitize] = v
-  end
-
-  opt.on('-d', '--dotfile', 'Don\'t ignore .dotfile') do |v|
-    options[:dotfile] = v
-  end
-
-  options[:help] = opt.help
-end.parse!
-
-def main(options)
-  if ARGV.size < 1
-    puts options[:help]
-  else
-    propre = Propre.new(options)
-    if File.directory?(ARGV[0])
-      propre.crawlDirectory(ARGV[0])
-    end
-
-    if File.file?(ARGV[0])
-      propre.searchMovieFromFile(ARGV[0])
-    end
-  end
-end
-
-begin
-  main(options)
-rescue Interrupt
-  puts "\nExiting..."  
-rescue StandardError => e
-  puts e
 end
