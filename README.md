@@ -22,18 +22,16 @@ Propre
 
 ##Changelog
 
+### 0.0.8
+
+  - Add version and usage params
+  - Fix: Create config directory if not present
+  - Fix: Wording
+  - Better errors handling
+
 ### 0.0.7
 
   - Fix: Sanitize params now work
-
-### 0.0.6
-
-  - Fix: Resolving dependencies issues
-
-### 0.0.5
-
-  - Update directory structure to work with RubyGems
-
 
 Disclaimer
 ----------
