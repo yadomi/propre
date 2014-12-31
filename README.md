@@ -21,17 +21,15 @@ Usage: propre [OPTION]... SOURCE...
 Changelog
 ---------
 
+### 0.0.5
+
+  - Update directory structure to work with RubyGems
+
 ### 0.0.4
 
   - Add params to consider .dotfile
   - Add params to sanitize file before search
   - Bugfix
-
-### 0.0.3
-
-  - Add params to iterate trought video only (Using MimeType)  
-  - Add params to skip current file
-  - Fix recursive params
 
 Disclaimer
 ----------
