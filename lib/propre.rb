@@ -1,5 +1,6 @@
 require 'propre/prompt'
 require 'propre/settings'
+require 'propre/version'
 
 require 'fileutils'
 require 'themoviedb'
@@ -7,6 +8,7 @@ require 'mime/types'
 
 class Propre
   include Prompt
+  include Version
 
   def initialize(options)
     @options = options

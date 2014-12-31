@@ -10,12 +10,12 @@ options = {}
 OptionParser.new do |opt|
   opt.banner = "Usage: #{ File.basename($0) } [OPTION]... SOURCE..."
 
-  opt.on('-R', '--recursive', 'Run recursively') do |v|
-    options[:recursive] = v
-  end
-
   opt.on('-i', '--interactive', 'Run interactively') do |v|
     options[:interactive] = v
+  end
+
+  opt.on('-R', '--recursive', 'Run recursively') do |v|
+    options[:recursive] = v
   end
 
   opt.on('-V', '--video-only', 'Search for video files only') do |v|
@@ -30,7 +30,18 @@ OptionParser.new do |opt|
     options[:dotfile] = v
   end
 
+  opt.on_tail("-v", "--version", "Show version information about this program and quit.") do
+    puts "#{Propre} - v#{Propre::VERSION}"
+    exit
+  end
+
+  opt.on_tail("-h", "--help", "--usage", "Show this help message and quit.") do |v|
+    puts opt.help
+    exit
+  end
+
   options[:help] = opt.help
+
 end.parse!
 
 def main(options)
