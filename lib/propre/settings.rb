@@ -5,7 +5,10 @@ class Settings
 
   def initialize(path)
     @path = path
-    if !File.exist?(path) then FileUtils.touch(path) end
+    if !File.exist?(path) 
+      FileUtils.mkdir_p("#{Dir.home}/.config/Propre/")
+      FileUtils.touch(path)
+    end
     conf = YAML.load_file(path)
     @settings = conf ? conf : Hash.new
   end
