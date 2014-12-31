@@ -22,6 +22,10 @@ Propre
 
 ##Changelog
 
+### 0.0.7
+
+  - Fix: Sanitize params now work
+
 ### 0.0.6
 
   - Fix: Resolving dependencies issues
@@ -30,11 +34,6 @@ Propre
 
   - Update directory structure to work with RubyGems
 
-### 0.0.4
-
-  - Add params to consider .dotfile
-  - Add params to sanitize file before search
-  - Bugfix
 
 Disclaimer
 ----------
