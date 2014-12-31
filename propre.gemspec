@@ -14,6 +14,11 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($\)
   spec.executables   = ['propre']
   spec.require_paths = ["lib"]
+  
+  spec.add_dependency "parseconfig", "~> 1.0.6"
+  spec.add_dependency "themoviedb", "~> 0.0.24"
+  spec.add_dependency "mime-types", "~> 2.4.3"
+  spec.add_dependency "highline", "~> 1.6.21"
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
