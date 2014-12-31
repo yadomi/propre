@@ -14,8 +14,9 @@ class Propre
     @options = options
     @settings = Settings.new("#{Dir.home}/.config/Propre/settings.yaml")
     if @settings.get('apikey').nil?
-      puts "It's seem you did not set your TMDB API Key, please tell me:"
+      puts "It's seem you didn't set your TMDB API Key (stored in ~/.config/Propre/settings.yaml) \nPlease tell me: "
       @settings.set('apikey', STDIN.gets.chomp())
+      puts "Thanks !"
     end
     Tmdb::Api.key(@settings.get('apikey'))
     Tmdb::Api.language(@settings.get('locale') ? @settings.get('locale') : 'en')

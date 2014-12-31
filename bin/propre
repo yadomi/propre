@@ -50,10 +50,12 @@ def main(options)
   else
     propre = Propre.new(options)
     if File.directory?(ARGV[0])
+      puts "Searching for movies title..."
       propre.crawlDirectory(ARGV[0])
     end
 
     if File.file?(ARGV[0])
+      puts "Searching for movie title..."
       propre.searchMovieFromFile(ARGV[0])
     end
   end
