@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["dev.yadomi@gmail.com"]
 
   spec.name          = "propre"
-  spec.version       = Propre::VERSION
+  spec.version       = Version::VERSION
   spec.summary       = %q{CLI tool to rename movies using TheMovieDB API }
 
   spec.files         = `git ls-files`.split($\)
