@@ -66,8 +66,12 @@ class Propre
 
   def sanitize(filename)
     filename.downcase!
-    filename.gsub!(/\(.*\)/, '').gsub!("_", ' ').gsub!(".", ' ').strip!
-    warez = ["truefrench","fansub","bluray","720", "720p", "x264","french", "fr", "divx","hdcam","xvid","appz","bdrip","board","cam","dvd","dvd-r","dvdrip","dupecheck","fake","fs","gamez","hddvd","hddvdrip","hdrip","hdtv","pdtv","internal","int","keygen","leecher","limited","nuke","proper","repack","retail","rip","rip","screener","serial","subforced","hardsub","stv","telecine","telesync","tvrip","unrated","vhsrip","vo","vost","vostfr","workprint","french","wp","subbed","unsubbed", "r5", "r6", "md"]  
+    filename.gsub!(/\(.*\)/, '')
+    filename.gsub!("_", ' ')
+    filename.gsub!(".", ' ')
+    filename.sub!(/(19|20)\d{2}/, '')
+    filename.strip!
+    warez = ["truefrench","brrip", "ac3-funky", "fansub","bluray","720", "720p", "x264","french", "fr", "divx","hdcam","xvid","appz","bdrip","board","cam","dvd","dvd-r","dvdrip","dupecheck","fake","fs","gamez","hddvd","hddvdrip","hdrip","hdtv","pdtv","internal","int","keygen","leecher","limited","nuke","proper","repack","retail","rip","rip","screener","serial","subforced","hardsub","stv","telecine","telesync","tvrip","unrated","vhsrip","vo","vost","vostfr","workprint","french","wp","subbed","unsubbed", "r5", "r6", "md"]  
     (filename.split - warez).join(' ')
   end
 
