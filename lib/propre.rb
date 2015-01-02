@@ -70,7 +70,7 @@ class Propre
     year = !movie.release_date.empty? ? Date.strptime(movie.release_date, "%Y-%m-%d").year : false
     title = year ? "#{movie.title} (#{year})" : "#{movie.title}"
     title.gsub! ':','-'
-    return "#{title}#{File.extname(@file)}"
+    return "#{title}#{File.extname(@file).downcase}"
   end
 
   def sanitize(filename)
