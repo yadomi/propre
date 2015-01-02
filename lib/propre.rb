@@ -5,6 +5,7 @@ require 'propre/version'
 require 'fileutils'
 require 'themoviedb'
 require 'mime/types'
+require 'similar_text'
 
 class Propre
   include Prompt
@@ -45,12 +46,15 @@ class Propre
     if @options[:sanitize] then filename = self.sanitize(filename) end
     begin
       @movies = Tmdb::Movie.find(filename)
-      @movies = @movies.sort { |a,b| b.release_date <=> a.release_date }
     rescue
       if Tmdb::Api.response['code'] === 401
         abort("Error: Did you set you're API Key ? (401)")
       end
     end
+    @movies = @movies.sort { |a,b| b.release_date <=> a.release_date }
+    movie = @movies.max_by {|v| filename.similar(v.title)}
+    @movies.delete(@movies.index(movie))
+    @movies.unshift(movie)
     if self.confirm
       File.rename(file, File.join(File.dirname(file), self.format(@selected)))
     end
