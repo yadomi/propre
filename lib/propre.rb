@@ -45,6 +45,7 @@ class Propre
     if @options[:sanitize] then filename = self.sanitize(filename) end
     begin
       @movies = Tmdb::Movie.find(filename)
+      @movies = @movies.sort { |a,b| b.release_date <=> a.release_date }
     rescue
       if Tmdb::Api.response['code'] === 401
         abort("Error: Did you set you're API Key ? (401)")
