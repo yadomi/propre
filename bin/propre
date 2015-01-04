@@ -56,7 +56,9 @@ def main(options)
 
     if File.file?(ARGV[0])
       puts "Searching for movie title..."
-      propre.searchMovieFromFile(ARGV[0])
+      if !propre.searchMovieFromFile(ARGV[0])
+        puts "No movie found for #{ARGV[0]}"
+      end
     end
   end
 end
