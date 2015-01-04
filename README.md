@@ -30,18 +30,16 @@ To use Propre, you need an API Key from TheMovieDB. Get your API key [here](http
 
 ##Changelog
 
+### 0.1.1
+
+  - Fix bug when no movie was found
+  - Fix wording
+
 ### 0.1.0
 
   - The first result is now the best match in the list (using similar_text)
   - Results are now ordered by release date
   - Extensions are now in lowercase when renaming (.AVI,.Avi -> .avi)
-
-### 0.0.8
-
-  - Add version and usage params
-  - Fix: Create config directory if not present
-  - Fix: Wording
-  - Better errors handling
 
 Disclaimer
 ----------
