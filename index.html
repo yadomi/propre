@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Propre - Shine your movies</title>
+	<link rel="stylesheet" href="/static/css/style.css">
+  <link href='//fonts.googleapis.com/css?family=Lobster|Source+Code+Pro' rel='stylesheet' type='text/css'>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet" type='text/css'>
+</head>
+<body>
+  <section class="hero">
+    <div class="wrap">
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+      <h1 class="animated bounceInDown">Shine your movies</h1>
+      <h2 class="animated bounceInDown">Propre</h2>
+    </div>
+  </section>
+  <section class="install">
+    <div class="wrap">
+      <h1 class="title">Installation & usage</h1>
+      <p>To install <strong>propre</strong>, it's as easy as download a Gem. You juste need <a href="https://rubygems.org/">RubyGems</a>.</p>
+      <pre class="gem"><code>sudo gem install propre</code></pre>
+      <hr>
+      <p>That's all. You can now use <strong>propre</strong> !</p>
+      <pre class="usage"><code>Usage: propre [OPTION]... SOURCE...
+    -R, --recursive                  Run recursively
+    -i, --interactive                Run interactively
+    -V, --video-only                 Search for video files only
+    -s, --sanitize                   Sanitize filename before search
+    -d, --dotfile                    Don't ignore .dotfile</code></pre>
+    </div>
+  </section>
+  <section class="demo">
+    <div class="wrap">
+      <h1 class="title">Your movies as never been so clean</h1>
+      <div class="before">
+        <pre><code>$ ls Movies
+Back.To.The.Future.1985.FRENCH.BRRip.x264.AC3-FUNKY.avi
+Guardians.of.the.Galaxy.2014.FRENCH.BDRip.XviD.avi
+Lucy.2014.RERiP.FRENCH.BDRip.x264-PRiDEHD</code></pre>
+      </div>
+      <div class="propre">
+        →
+      </div>
+      <div class="after">
+        <pre><code>$ ls Movies
+Retour vers le futur (1985).avi
+Les gardiens de la Galaxie (2014).avi
+Lucy (2014).avi</code></pre>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </section>
+  <footer>Propre - <a href="http://twitter.com/felixyadomi">Felix Yadomi</a> - CakeLabs © 2014</footer>
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-15341101-6', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

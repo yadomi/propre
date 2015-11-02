@@ -1,0 +1,173 @@
+@-webkit-keyframes glitter {
+ 0%   {  opacity: 1; }
+ 25%  {  opacity: 0.6; }
+ 50%  {  opacity: 1; }
+ 75%  {  opacity: 0.6; }
+ 100% {  opacity: 1; }
+}
+
+html,body{
+	margin:0;padding:0;
+}
+body{
+	font-size:16px;
+	font-family:'Arial';
+  background: #FFE9C1;
+}
+ul{
+	margin:0;padding:0;
+	list-style:none;
+}
+
+h1,h2,h3{
+  padding: 0;margin: 0;
+  font-weight: normal;
+}
+
+.clear{clear:both;}
+a{text-decoration: none;color:#695A41;}
+
+
+.wrap{
+  width:1000px;
+  margin: 0 auto;
+}
+
+.spark{
+  position: absolute;
+  background-image: url('../img/sparkle.png');
+  background-repeat: no-repeat;
+  height: 68px;width: 68px;
+  transform:scale(0.6);
+  animation: glitter 4.5s linear 0s infinite normal;
+  -webkit-animation: glitter .5s linear 0 infinite normal;  
+}
+.spark:nth-child(1){ left:  20%; -webkit-animation-duration: 1s}
+.spark:nth-child(2){ left:  25%;  top:27%;  transform:scale(0.8); -webkit-animation-duration: 3s}
+.spark:nth-child(3){ right: 20%;  top:22%;  transform:scale(0.7); -webkit-animation-duration: 1s }
+.spark:nth-child(4){ right: 28%;  top:41%;  transform:scale(0.5); -webkit-animation-duration: .8s}
+.spark:nth-child(5){ right: 20%;  top:3%;  transform:scale(0.5); -webkit-animation-duration: 4s }
+.spark:nth-child(6){ left:  35%;  top:69%;  transform:scale(0.9); -webkit-animation-duration: .9s }
+.spark:nth-child(7){ right:  39%; top:67%;  transform:scale(0.6); -webkit-animation-duration: 1s}
+
+.hero{
+  position: relative;
+  height: 380px;
+  text-align: center;
+  background-image:url('../img/bg.png'), -o-radial-gradient(51% 80%, #FFFFFF 3%, #FF96C2 94%);
+  background-image:url('../img/bg.png'), -moz-radial-gradient(51% 80%, #FFFFFF 3%, #FF96C2 94%);
+  background-image:url('../img/bg.png'), -ms-radial-gradient(51% 80%, #FFFFFF 3%, #FF96C2 94%);
+  background-image:url('../img/bg.png'), radial-gradient(51% 80%, #FFFFFF 3%, #FF96C2 94%);
+  background-repeat: repeat-x;
+}
+
+.hero h1{
+  -webkit-animation-delay: .2s;
+  color: #FFFFFF;
+  font-family: Lobster;
+  font-size: 4em;
+  margin-bottom: 60px;
+  padding-top: 15px;
+  position: relative;
+  text-shadow: 2px 3px 0px rgba(241,144,178,0.50);
+}
+
+.hero h1:after{
+  bottom: -60px;
+  color: #FFFFFF;
+  content: 'with';
+  font-family: Lobster;
+  font-size: 0.7em;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  text-shadow: 2px 3px 0px rgba(241,144,178,0.50);
+  width: 100%;
+}
+
+.hero h2{
+  color: #FFFFFF;
+  font-family: Lobster;
+  font-size: 7em;
+  text-shadow: 4px 4px 1px rgba(241,144,178,0.50);
+}
+
+h1.title{
+  width: 100%;
+  text-align: center;
+  padding:0 0 35px 0;
+  font-size: 3em;
+  font-family: Lobster;
+  color: #DBBC8B;
+  text-shadow: 2px 2px 0px #695A41;
+}
+
+pre{
+  padding:10px;
+  font-size: .8em;
+  background-color: #333;
+  color:#eee;
+  border-radius: 2px;
+  font-family: 'Source Code Pro';
+  overflow: hidden;
+}
+
+.demo,.install{
+  padding:35px 0 60px 0;
+}
+
+.demo .before{
+  width:40%;
+  float:left;
+  margin:0 2%;
+}
+ .demo .after{
+  width:40%;
+  float:right;
+  margin:0 2%;
+ }
+
+.demo .propre{
+  width:10%;
+  float:left;
+  text-align: center;
+  font-size: 4em;
+}
+
+.install {
+  z-index: 100;
+  box-shadow: 0 0 20px #775568;
+  border-top: 1px solid #B56565;
+  border-bottom: 1px solid #FFDBA2;
+  background-color: #fff;
+  position: relative;
+}
+
+.install p{
+  text-align: center;
+}
+
+.install pre.gem{
+  margin: 0 auto;
+  width:200px;
+  text-align: center;
+  display: block;
+}
+
+.install pre.usage{
+  margin: 0 auto;
+  width:700px;
+  display: block;
+}
+
+.install hr{
+  visibility: hidden;
+  margin-top:30px;
+}
+
+footer{
+  text-align: center;
+  font-size: 0.7em;
+  color:#222;
+  padding:0 0 5px 0;
+}
