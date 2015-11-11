@@ -1,6 +1,8 @@
 require 'json'
 require 'colorize'
 
+require 'propre/blacklist'
+
 module Propre
   def self.propify(arg)
     ban_words(ban_chars(sanitize(remove_patterns(arg.downcase)))).split.map(&:capitalize).join(' ')
@@ -37,9 +39,8 @@ module Propre
   end
 
   def self.ban_words(arg)
-    words = %w(dvd rip xvid hdtv bluray fastsub vostfr ac3)
     arg.split.each do |word|
-      words.select do |e|
+      Blacklist::WORDS.select do |e|
         arg.slice! word if word.include? e
       end
     end
