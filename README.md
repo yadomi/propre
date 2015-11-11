@@ -9,7 +9,7 @@ Propre
 
 **Propre** is a handy tool written in Ruby to bulk rename your movies.
 
-Propre will extract the title of a movie from it's filename and then rename it by removing any useless part.
+Propre will extract the title of a movie from it's filename and then rename it by removing any useless part. See demo [here](http://yadomi.github.io/propre/).
 
 ##Installation
 
