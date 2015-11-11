@@ -1,97 +1,71 @@
-require 'propre/prompt'
-require 'propre/settings'
-require 'propre/version'
+require 'json'
+require 'colorize'
 
-require 'fileutils'
-require 'themoviedb'
-require 'mime/types'
-require 'similar_text'
-
-class Propre
-  include Prompt
-  include Version
-
-  def initialize(options)
-    @options = options
-    @settings = Settings.new("#{Dir.home}/.config/Propre/settings.yaml")
-    if @settings.get('apikey').nil?
-      puts "It's seem you didn't set your TMDB API Key (stored in ~/.config/Propre/settings.yaml) \nPlease tell me: "
-      @settings.set('apikey', STDIN.gets.chomp())
-      puts "Thanks !"
-    end
-    Tmdb::Api.key(@settings.get('apikey'))
-    Tmdb::Api.language(@settings.get('locale') ? @settings.get('locale') : 'en')
+module Propre
+  def self.propify(arg)
+    ban_words(ban_chars(sanitize(remove_patterns(arg.downcase)))).split.map(&:capitalize).join(' ')
   end
 
-  def crawlDirectory(path)
-    Dir.foreach(path) do |item|
-      next if item == '.' or item == '..'
-      if File.directory?(File.join(path, item))
-        if @options[:recursive] then self.crawlDirectory(File.join(path, item)) end
-      else
-        self.searchMovieFromFile(File.join(path, item))
+  def self.find_urls(arg)
+    arg = arg.match '((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[.\!\/\\w]*))?)'
+    arg.to_s
+  end
+
+  def self.find_years(arg)
+    arg = arg.match '((19|20)\d\d)'
+    arg.to_s
+  end
+
+  def self.find_episode(arg)
+    arg = arg.match '(s\d{1,2}e\d{2,3})'
+    arg.to_s
+  end
+
+  def self.remove_patterns(arg)
+    arg.slice! find_urls(arg)
+    arg.slice! find_years(arg)
+    arg.slice! find_episode(arg)
+    arg
+  end
+
+  def self.sanitize(arg)
+    arg.gsub('.', ' ').strip
+  end
+
+  def self.ban_chars(arg)
+    arg.tr('^A-Za-z0-9 ', '').strip
+  end
+
+  def self.ban_words(arg)
+    words = %w(dvd rip xvid hdtv bluray fastsub vostfr ac3)
+    arg.split.each do |word|
+      words.select do |e|
+        arg.slice! word if word.include? e
       end
     end
+    arg.squeeze(' ')
   end
 
-  def searchMovieFromFile(file)
-    @file = file
-    filename = File.basename(file,File.extname(file))
-    if @options[:videonly] && !video?(file)
-      return
-    end
-    if !@options[:dotfile] && filename.start_with?('.')
-      return
-    end
-    if @options[:sanitize] then filename = self.sanitize(filename) end
-    begin
-      @movies = Tmdb::Movie.find(filename)
-    rescue
-      if Tmdb::Api.response['code'] === 401
-        abort("Error: Did you set you're API Key ? (401)")
-      end
-    end
-    if @movies.empty? then return false end
-    @movies = @movies.sort { |a,b| b.release_date <=> a.release_date }
-    movie = @movies.max_by {|v| filename.similar(v.title)}
-    @movies.delete(@movies.index(movie))
-    @movies.unshift(movie)
-    if self.confirm
-      File.rename(file, File.join(File.dirname(file), self.format(@selected)))
-    end
+  def self.metadata(arg)
+    arg = arg.downcase
+    {
+      year: find_years(arg),
+      episode: find_episode(arg).upcase,
+      website: find_urls(arg)
+    }
   end
 
-  def confirm()
-    @selected = false
-    @movies.each do |movie|
-      answer = Prompt.yesno("#{File.basename(@file)} -> #{self.format(movie)}")
-      if answer === false; next ; elsif answer === 'skip'; puts "Skipping..."; return end
-      @selected = movie
-      break
-    end
-    if @selected then @selected end
+  def self.format(newname, metadata)
+    metadata[:newname] = newname
+    metadata[:year] = "(#{metadata[:year]})" unless metadata[:year].empty?
+
+    format = '%{newname} %{episode} %{year}'
+    formated = format % metadata
+    formated.strip.squeeze(' ')
   end
 
-  def format(movie)
-    year = !movie.release_date.empty? ? Date.strptime(movie.release_date, "%Y-%m-%d").year : false
-    title = year ? "#{movie.title} (#{year})" : "#{movie.title}"
-    title.gsub! ':','-'
-    return "#{title}#{File.extname(@file).downcase}"
+  def self.basename_newname_metadata(arg)
+    basename = File.basename(arg, File.extname(arg))
+    [basename, format(propify(basename), metadata(basename)), metadata(basename)]
   end
-
-  def sanitize(filename)
-    filename.downcase!
-    filename.gsub!(/\(.*\)/, '')
-    filename.gsub!("_", ' ')
-    filename.gsub!(".", ' ')
-    filename.sub!(/(19|20)\d{2}/, '')
-    filename.strip!
-    warez = ["truefrench","brrip", "ac3-funky", "fansub","bluray","720", "720p", "x264","french", "fr", "divx","hdcam","xvid","appz","bdrip","board","cam","dvd","dvd-r","dvdrip","dupecheck","fake","fs","gamez","hddvd","hddvdrip","hdrip","hdtv","pdtv","internal","int","keygen","leecher","limited","nuke","proper","repack","retail","rip","rip","screener","serial","subforced","hardsub","stv","telecine","telesync","tvrip","unrated","vhsrip","vo","vost","vostfr","workprint","french","wp","subbed","unsubbed", "r5", "r6", "md"]  
-    (filename.split - warez).join(' ')
-  end
-
-  def video?(file)
-    MIME::Types[/^video/].include? MIME::Types.of(file)
-  end
-
 end

@@ -1,72 +1,44 @@
 #!/usr/bin/env ruby
+require 'thor'
 
 lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
 $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
-require 'optparse'
 require 'propre'
+require 'propre/version'
 
-options = {}
-OptionParser.new do |opt|
-  opt.banner = "Usage: #{ File.basename($0) } [OPTION]... SOURCE..."
-
-  opt.on('-i', '--interactive', 'Run interactively') do |v|
-    options[:interactive] = v
-  end
-
-  opt.on('-R', '--recursive', 'Run recursively') do |v|
-    options[:recursive] = v
-  end
-
-  opt.on('-V', '--video-only', 'Search for video files only') do |v|
-    options[:videonly] = v
-  end
-
-  opt.on('-s', '--sanitize', 'Sanitize filename before search') do |v|
-    options[:sanitize] = v
-  end
-
-  opt.on('-d', '--dotfile', 'Don\'t ignore .dotfile') do |v|
-    options[:dotfile] = v
-  end
-
-  opt.on_tail("-v", "--version", "Show version information about this program and quit.") do
-    puts "#{Propre} - v#{Propre::VERSION}"
-    exit
-  end
-
-  opt.on_tail("-h", "--help", "--usage", "Show this help message and quit.") do |v|
-    puts opt.help
-    exit
-  end
-
-  options[:help] = opt.help
-
-end.parse!
-
-def main(options)
-  if ARGV.size < 1
-    puts options[:help]
-  else
-    propre = Propre.new(options)
-    if File.directory?(ARGV[0])
-      puts "Searching for movies in directory..."
-      propre.crawlDirectory(ARGV[0])
-    end
-
-    if File.file?(ARGV[0])
-      puts "Searching for movie title..."
-      if !propre.searchMovieFromFile(ARGV[0])
-        puts "No movie found for #{ARGV[0]}"
+class CLI < Thor
+  include Propre
+  desc 'lint [FILENAME...]', 'Sanitize the specified file. Use --dry for dry run'
+  option :dry,    type: :boolean
+  option :color,  type: :boolean, default: true
+  def lint(*args)
+    String.disable_colorization(true) unless options[:color]
+    args.each do |filename|
+      basename, newname, metadata = Propre.basename_newname_metadata(filename)
+      if options[:dry]
+        unchanged = basename == newname ? :green : :yellow
+        puts "#{filename} -> #{newname}#{File.extname(filename)}".colorize(unchanged)
+      else
+        File.rename(filename, "#{newname}#{File.extname(filename)}")
       end
     end
   end
+  default_task :lint
+
+  desc 'metadata [FILENAME]', 'Show metadata about the specified movie or episode'
+  option :format, default: 'json'
+  def metadata(filename)
+    basename, newname, metadata = Propre.basename_newname_metadata(filename)
+    metadata[:title] = newname
+    puts metadata.to_json
+  end
+
+  map %w(--version -v) => :__version
+  desc '--version, -v', 'Show version information about this program and quit.'
+  def __version
+    puts "#{Propre} - v#{Version::VERSION}"
+  end
 end
 
-begin
-  main(options)
-rescue Interrupt
-  puts "\nExiting..."  
-rescue StandardError => e
-  puts e
-end
+CLI.start(ARGV)
