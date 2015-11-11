@@ -9,17 +9,15 @@ Gem::Specification.new do |spec|
 
   spec.name          = 'propre'
   spec.version       = Version::VERSION
-  spec.summary       = 'CLI tool to rename movies using TheMovieDB API'
+  spec.summary       = 'CLI tool to sanitize movies filename'
 
   spec.files         = `git ls-files`.split($ORS)
   spec.executables   = ['propre']
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'parseconfig', '~> 1.0.6'
-  spec.add_dependency 'themoviedb', '~> 0.0.24'
-  spec.add_dependency 'mime-types', '~> 2.4.3'
-  spec.add_dependency 'highline', '~> 1.6.21'
-  spec.add_dependency 'similar_text', '~> 0.0.4'
+  spec.add_dependency 'thor', '~> 0.19.1'
+  spec.add_dependency 'json', '~> 1.8.3'
+  spec.add_dependency 'colorize', '~> 0.7.7'
 
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
