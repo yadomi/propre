@@ -116,6 +116,10 @@ pre{
   padding:35px 0 60px 0;
 }
 
+.demo-interactive {
+  text-align: center;
+}
+
 .demo .before{
   width:40%;
   float:left;
