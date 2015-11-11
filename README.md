@@ -17,11 +17,11 @@ Propre will extract the title of a movie from it's filename and then rename it b
 
 ##Usage
 
-  Commands:
-    propre --version, -v        # Show version information about this program and quit.
-    propre help [COMMAND]       # Describe available commands or one specific command
-    propre lint [FILENAME...]   # Sanitize the specified file. Use --dry for dry run
-    propre metadata [FILENAME]  # Show metadata about the specified movie or episode
+    Commands:
+      propre --version, -v        # Show version information about this program and quit.
+      propre help [COMMAND]       # Describe available commands or one specific command
+      propre lint [FILENAME...]   # Sanitize the specified file. Use --dry for dry run
+      propre metadata [FILENAME]  # Show metadata about the specified movie or episode
 
 ##Changelog
 
