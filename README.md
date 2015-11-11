@@ -7,28 +7,28 @@ Propre
 
 ##Introduction
 
-**Propre** is a handy tool written in Ruby to bulk rename your movies using [TheMovieDB](https://www.themoviedb.org/) API.
+**Propre** is a handy tool written in Ruby to bulk rename your movies.
 
-Propre will extract the title of a movie from it's filename and then rename it based on search result from TMDB.
+Propre will extract the title of a movie from it's filename and then rename it by removing any useless part.
 
 ##Installation
 
     gem install propre
 
-To use Propre, you need an API Key from TheMovieDB. Get your API key [here](https://www.themoviedb.org/account).
-
 ##Usage
 
-    Usage: propre [OPTION]... SOURCE...
-        -i, --interactive                Run interactively
-        -R, --recursive                  Run recursively
-        -V, --video-only                 Search for video files only
-        -s, --sanitize                   Sanitize filename before search
-        -d, --dotfile                    Don't ignore .dotfile
-        -v, --version                    Show version information about this program and quit.
-        -h, --help, --usage              Show this help message and quit.
+  Commands:
+    propre --version, -v        # Show version information about this program and quit.
+    propre help [COMMAND]       # Describe available commands or one specific command
+    propre lint [FILENAME...]   # Sanitize the specified file. Use --dry for dry run
+    propre metadata [FILENAME]  # Show metadata about the specified movie or episode
 
 ##Changelog
+
+### 0.2.0
+
+  - Complete rewrite with Thor
+  - Removing the use of TMDB since search result wasn't successful
 
 ### 0.1.1
 
