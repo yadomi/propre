@@ -25,9 +25,13 @@ Propre will extract the title of a movie from it's filename and then rename it b
 
 ##Changelog
 
+### 0.2.2
+
+  - Update blacklist (added fastsub)
+
 ### 0.2.1
 
-  - Update blacklist
+  - Update blacklist (added x264, french)
 
 ### 0.2.0
 

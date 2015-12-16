@@ -6,6 +6,7 @@ module Blacklist
     hdtv
     bluray
     fastsub
+    fansub
     vostfr
     ac3
     x264
