@@ -31,7 +31,11 @@ module Propre
   end
 
   def self.sanitize(arg)
-    arg.gsub('.', ' ').strip
+    if arg.count('.') > arg.count('-')
+      arg.gsub('.', ' ').strip
+    else
+      arg.gsub('-', ' ').strip
+    end
   end
 
   def self.ban_chars(arg)
