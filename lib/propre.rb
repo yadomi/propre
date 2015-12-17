@@ -1,7 +1,7 @@
 require 'json'
 require 'colorize'
 
-require 'propre/blacklist'
+require 'propre/dictionary'
 
 module Propre
   def self.propify(arg)
@@ -44,7 +44,7 @@ module Propre
 
   def self.ban_words(arg)
     arg.split.each do |word|
-      Blacklist::WORDS.select do |e|
+      Dictionary::BANNED.select do |e|
         arg.slice! word if word.include? e
       end
     end

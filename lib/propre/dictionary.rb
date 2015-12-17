@@ -1,5 +1,5 @@
-module Blacklist
-  WORDS = %w(
+module Dictionary
+  BANNED = %w(
     dvd
     rip
     xvid
@@ -9,10 +9,19 @@ module Blacklist
     fansub
     vostfr
     ac3
-    x264
-    french
     theatrical
     unrated
     subforced
+  )
+
+  LANGUAGES = %w(
+    french
+    italian
+  )
+
+  QUALITY = %w(
+    x264
+    720p
+    1080p
   )
 end
