@@ -1,8 +1,9 @@
 Propre
 ======
 
-[![Gem Version](https://badge.fury.io/rb/propre.svg)](http://badge.fury.io/rb/propre)
+[![Gem Version](https://badge.fury.io/rb/propre.svg)](https://rubygems.org/gems/propre/)
 [![Dependency Status](https://gemnasium.com/yadomi/propre.svg)](https://gemnasium.com/yadomi/propre)
+[![Gem](https://img.shields.io/gem/dtv/propre.svg)](https://rubygems.org/gems/propre/)
 
 ---
 
