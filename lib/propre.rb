@@ -43,8 +43,11 @@ module Propre
   end
 
   def self.ban_words(arg)
+    banned_words = Dictionary.constants.map do |e|
+      [].concat Dictionary.const_get(e)
+    end
     arg.split.each do |word|
-      Dictionary::BANNED.select do |e|
+      banned_words.flatten.select do |e|
         arg.slice! word if word.include? e
       end
     end
