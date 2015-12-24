@@ -32,11 +32,9 @@ module Propre
   end
 
   def self.remove_patterns(arg)
-    arg.slice! find_urls(arg)
-    arg.slice! find_years(arg)
-    arg.slice! find_episode(arg)
-    arg.slice! find_language(arg)
-    arg.slice! find_quality(arg)
+    %w(find_urls find_years find_episode find_language find_quality).each do |m|
+      arg.slice! method(m).call(arg)
+    end
     arg
   end
 
