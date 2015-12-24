@@ -1,7 +1,7 @@
 require 'json'
 require 'colorize'
 
-require 'propre/blacklist'
+require 'propre/dictionary'
 
 module Propre
   def self.propify(arg)
@@ -23,10 +23,18 @@ module Propre
     arg.to_s
   end
 
+  def self.find_language(arg)
+    Dictionary::LANGUAGES.find { |e| arg.include?(e) } || ''
+  end
+
+  def self.find_quality(arg)
+    Dictionary::QUALITY.find { |e| arg.include?(e) } || ''
+  end
+
   def self.remove_patterns(arg)
-    arg.slice! find_urls(arg)
-    arg.slice! find_years(arg)
-    arg.slice! find_episode(arg)
+    %w(find_urls find_years find_episode find_language find_quality).each do |m|
+      arg.slice! method(m).call(arg)
+    end
     arg
   end
 
@@ -43,8 +51,11 @@ module Propre
   end
 
   def self.ban_words(arg)
+    banned_words = Dictionary.constants.reduce([]) do |sum, e|
+      sum.concat Dictionary.const_get(e)
+    end
     arg.split.each do |word|
-      Blacklist::WORDS.select do |e|
+      banned_words.select do |e|
         arg.slice! word if word.include? e
       end
     end
@@ -56,7 +67,9 @@ module Propre
     {
       year: find_years(arg),
       episode: find_episode(arg).upcase,
-      website: find_urls(arg)
+      website: find_urls(arg),
+      language: find_language(arg),
+      quality: find_quality(arg)
     }
   end
 
