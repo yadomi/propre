@@ -35,6 +35,8 @@ module Propre
     arg.slice! find_urls(arg)
     arg.slice! find_years(arg)
     arg.slice! find_episode(arg)
+    arg.slice! find_language(arg)
+    arg.slice! find_quality(arg)
     arg
   end
 
