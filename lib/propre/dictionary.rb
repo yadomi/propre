@@ -15,6 +15,7 @@ module Dictionary
   )
 
   LANGUAGES = %w(
+    truefrench
     french
     italian
   )
