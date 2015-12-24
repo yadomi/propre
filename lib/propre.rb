@@ -23,6 +23,14 @@ module Propre
     arg.to_s
   end
 
+  def self.find_languages(arg)
+    Dictionary::LANGUAGES.find { |e| arg.include?(e) } || ''
+  end
+
+  def self.find_quality(arg)
+    Dictionary::QUALITY.find { |e| arg.include?(e) } || ''
+  end
+
   def self.remove_patterns(arg)
     arg.slice! find_urls(arg)
     arg.slice! find_years(arg)
@@ -59,7 +67,9 @@ module Propre
     {
       year: find_years(arg),
       episode: find_episode(arg).upcase,
-      website: find_urls(arg)
+      website: find_urls(arg),
+      language: find_languages(arg),
+      quality: find_quality(arg)
     }
   end
 
