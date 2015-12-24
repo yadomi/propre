@@ -1,7 +1,10 @@
-[![Gem Version](https://badge.fury.io/rb/propre.svg)](http://badge.fury.io/rb/propre)
-
 Propre
 ======
+
+[![Gem Version](https://badge.fury.io/rb/propre.svg)](http://badge.fury.io/rb/propre)
+[![Dependency Status](https://gemnasium.com/yadomi/propre.svg)](https://gemnasium.com/yadomi/propre)
+
+---
 
 ![Propre](http://cl.ly/image/3b3M2Q2s2r2r/Image%202014-12-31%20at%204.10.46%20PM.png)
 
