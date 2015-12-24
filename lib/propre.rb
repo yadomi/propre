@@ -23,7 +23,7 @@ module Propre
     arg.to_s
   end
 
-  def self.find_languages(arg)
+  def self.find_language(arg)
     Dictionary::LANGUAGES.find { |e| arg.include?(e) } || ''
   end
 
@@ -68,7 +68,7 @@ module Propre
       year: find_years(arg),
       episode: find_episode(arg).upcase,
       website: find_urls(arg),
-      language: find_languages(arg),
+      language: find_language(arg),
       quality: find_quality(arg)
     }
   end
