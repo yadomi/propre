@@ -11,5 +11,8 @@ module Blacklist
     ac3
     x264
     french
+    theatrical
+    unrated
+    subforced
   )
 end
