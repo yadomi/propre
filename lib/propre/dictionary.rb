@@ -12,6 +12,24 @@ module Dictionary
     theatrical
     unrated
     subforced
+    fansub
+    hdcam
+    bdrip
+    dupecheck
+    hddvdrip
+    hddvd
+    hdrip
+    hdtv
+    proper
+    repack
+    retail
+    screener
+    subforced
+    hardsub
+    telesync
+    unrated
+    subbed
+    unsubbed
   )
 
   LANGUAGES = %w(
