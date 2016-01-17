@@ -1,28 +1,46 @@
 module Dictionary
   BANNED = %w(
-    dvd
-    rip
-    xvid
-    hdtv
-    bluray
-    fastsub
-    fansub
-    vostfr
     ac3
+    bdrip
+    bluray
+    dupecheck
+    dvd
+    fansub
+    fansub
+    fastsub
+    hardsub
+    hdcam
+    hddvd
+    hddvdrip
+    hdrip
+    hdtv
+    hdtv
+    proper
+    repack
+    retail
+    rip
+    screener
+    subbed
+    subforced
+    subforced
+    telesync
     theatrical
     unrated
-    subforced
+    unrated
+    unsubbed
+    vostfr
+    xvid
   )
 
   LANGUAGES = %w(
-    truefrench
     french
     italian
+    truefrench
   )
 
   QUALITY = %w(
-    x264
-    720p
     1080p
+    720p
+    x264
   )
 end
