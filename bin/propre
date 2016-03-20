@@ -14,13 +14,15 @@ class CLI < Thor
   option :color,  type: :boolean, default: true
   def lint(*args)
     String.disable_colorization(true) unless options[:color]
-    args.each do |filename|
-      basename, newname, metadata = Propre.basename_newname_metadata(filename)
+    args.each do |oldpath|
+      basename, newname, metadata = Propre.basename_newname_metadata(oldpath)
+      working_directory = File.dirname(oldpath)
+      newpath = "#{File.join(working_directory, newname + File.extname(oldpath))}"
       if options[:dry]
         unchanged = basename == newname ? :green : :yellow
-        puts "#{filename} -> #{newname}#{File.extname(filename)}".colorize(unchanged)
+        puts "#{oldpath} -> #{newpath}".colorize(unchanged)
       else
-        File.rename(filename, "#{newname}#{File.extname(filename)}")
+        File.rename(oldpath, "#{newpath}")
       end
     end
   end
