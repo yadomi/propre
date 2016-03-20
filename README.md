@@ -29,6 +29,9 @@ Propre will extract the title of a movie from it's filename and then rename it b
 
 ##Changelog
 
+### 0.3.2
+  - Fix working directory issue when renaming with path ([#13](https://github.com/yadomi/propre/issues/13))
+
 ### 0.3.1
 
   - Added Rubocop
