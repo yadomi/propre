@@ -29,6 +29,12 @@ Propre will extract the title of a movie from it's filename and then rename it b
 
 ##Changelog
 
+### 0.3.1
+
+  - Added Rubocop
+  - Dynamically find words seperator by counting the more redundant char
+  - Update blacklist
+
 ### 0.3.0
 
   - Extract quality as metadata
