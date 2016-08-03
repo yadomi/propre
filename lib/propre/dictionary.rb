@@ -1,5 +1,8 @@
 module Dictionary
   BANNED = %w(
+    2ch
+    4k
+    aac
     ac3
     bdrip
     bluray
@@ -15,6 +18,8 @@ module Dictionary
     hdrip
     hdtv
     hdtv
+    hvec
+    mkv
     proper
     repack
     retail
@@ -25,10 +30,14 @@ module Dictionary
     subforced
     telesync
     theatrical
+    uhd
+    ultrahd
     unrated
     unrated
     unsubbed
     vostfr
+    x264
+    x265
     xvid
   )
 
