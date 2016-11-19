@@ -29,6 +29,10 @@ Propre will extract the title of a movie from it's filename and then rename it b
 
 ##Changelog
 
+### 0.3.4
+  - Update dictionnary ([#17](https://github.com/yadomi/propre/issues/17))
+  - Remove words in brackets ([#17](https://github.com/yadomi/propre/issues/17))
+
 ### 0.3.3
   - Update blacklist ([#16](https://github.com/yadomi/propre/issues/16))
 
