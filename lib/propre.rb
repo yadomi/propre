@@ -41,10 +41,7 @@ module Propre
   def self.sanitize(arg)
     separator = %w(- _ .).each_with_object({}) { |c, s| s[c] = arg.count(c) }
                 .sort_by(&:last).reverse.first.first
-    arg
-      .gsub(separator, ' ')
-      .strip
-      .sub /\[.*?\]/, ''
+    arg.gsub(separator, ' ').strip.sub(/\[.*?\]/, '')
   end
 
   def self.ban_chars(arg)
