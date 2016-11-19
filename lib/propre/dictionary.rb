@@ -11,6 +11,8 @@ module Dictionary
     fansub
     fansub
     fastsub
+    h264
+    h265
     hardsub
     hdcam
     hddvd
@@ -45,11 +47,13 @@ module Dictionary
     french
     italian
     truefrench
+    vostfr
   )
 
   QUALITY = %w(
     1080p
     720p
     x264
+    bluray
   )
 end
