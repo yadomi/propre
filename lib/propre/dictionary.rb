@@ -22,6 +22,7 @@ module Dictionary
     hdtv
     hvec
     mkv
+    multi
     proper
     repack
     retail
